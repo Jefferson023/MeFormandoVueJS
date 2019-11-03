@@ -73,15 +73,23 @@ const EditarFormando = () => import('@/views/EditarFormando')
 const AdicionarFormando = () => import('@/views/AdicionarFormando')
 Vue.use(Router)
 
-function beforeEach(to, from, next) {
+function autenticado(to, from, next) {
   // redirect to login page if not logged in and trying to access a restricted page
   const loggedIn = localStorage.getItem('user_token');
-
   if (!loggedIn) {
     return next('pages/login');
+  }else{
+    if (to.path == "/login" | to.path == "/register"){
+      return next('/')
+    }else{
+      next()
+    }
   }
+}
 
-  next();
+function logout(to, from, next){
+  localStorage.removeItem("user_token")
+  next('pages/login')
 }
 
 function configRoutes() {
@@ -89,7 +97,7 @@ function configRoutes() {
     {
       path: '/',
       redirect: '/turma',
-      beforeEnter: beforeEach,
+      beforeEnter: autenticado,
       name: 'Home',
       component: DefaultContainer,
       children: [
@@ -196,6 +204,11 @@ function configRoutes() {
           component: Register
         }
       ]
+    }, 
+    {
+      path: "/logout",
+      name: "logout",
+      beforeEnter: logout
     }
   ]
 }

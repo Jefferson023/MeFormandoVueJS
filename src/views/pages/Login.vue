@@ -11,11 +11,11 @@
                   <p class="text-muted">Sign In to your account</p>
                   <b-input-group class="mb-3">
                     <b-input-group-prepend><b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
-                    <b-form-input id = "email" type="text" class="form-control" placeholder="Email" autocomplete="username email" />
+                    <b-form-input v-model = "email" type="text" class="form-control" placeholder="Email" autocomplete="username email" />
                   </b-input-group>
                   <b-input-group class="mb-4">
                     <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
-                    <b-form-input id = "password" type="password" class="form-control" placeholder="Senha" autocomplete="current-password" />
+                    <b-form-input v-model = "password" type="password" class="form-control" placeholder="Senha" autocomplete="current-password" />
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
@@ -57,9 +57,12 @@ export default {
       const data = qs.stringify({email: this.email, senha: this.password})
       const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8'}
       axios.post(process.env.VUE_APP_API+"/usuario/logar", data, header).then((response) =>{
-        console.log(response.headers);
-        localStorage.setItem("user_token", response.headers.token)
-        this.$router.push('/')
+        if (response.status == 201){
+          localStorage.setItem("user_token", response.headers.token)
+          this.$router.push('/')
+        }else{
+          //usuário ou senha inválido
+        }
       }).catch(()=>{
         console.log("erro");
       })
