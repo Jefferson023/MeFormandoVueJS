@@ -36,6 +36,9 @@
                   <b-button variant="primary" class="active mt-3" to="/pages/register">Registre-se agora!</b-button>
                 </div>
               </b-card-body>
+              <b-button v-if="DeuCerto">
+                True
+              </b-button>
             </b-card>
           </b-card-group>
         </b-col>
@@ -52,6 +55,12 @@ export default {
   data() {
     return {password: "", email: ""};
   },
+  props:{
+    DeuCerto:{
+      type:Boolean,
+      default: false
+    }
+  },
   methods: {
     logar(){
       const data = qs.stringify({email: this.email, senha: this.password})
@@ -59,12 +68,13 @@ export default {
       axios.post(process.env.VUE_APP_API+"/usuario/logar", data, header).then((response) =>{
         if (response.status == 201){
           localStorage.setItem("user_token", response.headers.token)
-          this.$router.push('/')
+          this.$router.push('/')  
         }else{
           //usuário ou senha inválido
         }
       }).catch(()=>{
         console.log("erro");
+        
       })
     }
   }

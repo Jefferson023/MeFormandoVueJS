@@ -1,11 +1,11 @@
 <template>
-  <div class="animated fadeIn">
+  <div class="animated fadeIn" v-if="tem_Turma">
 
     
     
     <b-row>
       <b-col lg="12">
-        <c-table :table-data="items" :fields="fields" caption="TurmaParticipante  ">
+        <c-table :table-data="items" :fields="fields" caption="Participantes  da Turma">
           
         </c-table>
 
@@ -15,6 +15,20 @@
     </b-row><!--/.row-->
 
     
+  </div>
+  
+  <div class="animated fadiIn" v-else>
+    <b-card>
+    <div slot="header">
+        <h2><strong>Turma</strong></h2>
+    </div>
+    
+      <h1>Você não faz parte de uma turma!</h1>
+     
+        <b-button type="submit" size="xm" variant="primary" style="margin-right:10px"> Entrar numa turma</b-button>
+        <b-button type="submit" size="xm" variant="primary" to="/CriarTurma"> Criar uma turma</b-button>
+    
+    </b-card>
   </div>
 
 </template>
@@ -34,6 +48,9 @@ const someData = () => shuffleArray([
 
 export default {
   name: 'turma',
+  data: {
+    tem_Turma:false
+  },
   components: {cTable},
   data: () => {
     return {
@@ -46,6 +63,28 @@ export default {
         {key: 'opcoes'}
       ],
       
+    }
+  },
+   methods: {
+     
+  },
+  computed:{
+    getComissao(){
+      const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8'}
+      const data = qs.stringify({token: localStorage.getItem('user_token')})
+      axios.get(process.env.VUE_APP_API+"/usuario/isComissao", data, header).then((isComissao) =>{
+        if (isComissao == true){
+          console.log(isComissao)
+          console.log("é membro da comissão")
+          this.tem_Turma = true
+          
+        }else{
+          console.log("Não é membro da comissão")
+        }
+      }).catch(()=>{
+        console.log("erro");
+        
+      })
     }
   }
 }

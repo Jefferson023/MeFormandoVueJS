@@ -5,7 +5,7 @@
     
     <b-row>
       <b-col lg="12">
-        <votacao :table-data="items" :fields="fields" caption="<h1>   Votações</h1>">
+        <votacao :table-data="items" :fields="fields" caption="Votações">
           
         </votacao>
 

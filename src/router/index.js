@@ -54,7 +54,6 @@ const Register = () => import('@/views/pages/Register')
 // Users
 const Users = () => import('@/views/users/Users')
 const User = () => import('@/views/users/User')
-
 const Charts = () => import('@/views/Charts')
 const Widgets = () => import('@/views/Widgets')
 const Turma = () => import('@/views/Turma')
@@ -71,6 +70,8 @@ const EditarEvento = () => import('@/views/EditarEvento')
 const EditarCerimonial = () => import('@/views/EditarCerimonial')
 const EditarFormando = () => import('@/views/EditarFormando')
 const AdicionarFormando = () => import('@/views/AdicionarFormando')
+const AdicionarVotacao = () => import('@/views/AdicionarVotacao')
+const CriarTurma = () => import('@/views/CriarTurma')
 Vue.use(Router)
 
 function autenticado(to, from, next) {
@@ -106,6 +107,16 @@ function configRoutes() {
           path: 'turma',
           name: 'Turma',
           component: Turma
+        },
+        {
+          path: 'AdicionarFormando',
+          name: 'Adicionar Formando',
+          component: AdicionarFormando
+        },
+        {
+          path: 'CriarTurma',
+          name: 'Criar Turma',
+          component: CriarTurma
         },
         {
           path: 'EditarFormando',
