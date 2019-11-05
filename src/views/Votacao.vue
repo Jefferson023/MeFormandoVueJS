@@ -1,8 +1,15 @@
 <template >
     <b-card>
-        <div slot="header" v-html="caption"></div>
-    
-
+        <div slot="header">
+            <b-row>
+                <b-col md="11">
+                    <h1>{{caption}}</h1>
+                </b-col>
+                <b-col md="1">
+                    <b-button variant="link" style="margin-left:50%;margin-top:5%" to="/AdicionarVotacao"><i class="icon-plus icons font-2xl"></i></b-button>
+                </b-col>
+            </b-row>
+        </div>
     <b-list-group :items="items" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
         <b-list-group-item  v-for="item in items" v-bind:key="item" to="/voto" class="flex-column align-items-start"  >
             <h5>
