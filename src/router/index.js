@@ -124,9 +124,9 @@ function configRoutes() {
           component: EditarFormando
         },
         {
-          path: 'AdicionarFormando',
-          name: 'Adicionar Formando',
-          component: AdicionarFormando
+          path: 'AdicionarVotacao',
+          name: 'Adicionar Votação',
+          component: AdicionarVotacao
         },
         {
           path: 'cerimonial',
