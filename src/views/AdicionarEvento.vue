@@ -14,7 +14,7 @@
               label-for="Titulo"
               :label-cols="3"
               >
-              <b-form-input id="Titulo" type="text" autocomplete="titulo"></b-form-input>
+              <b-form-input id="Titulo" v-model= "Titulo" type="text" autocomplete="titulo"></b-form-input>
             </b-form-group>
             <b-form-group
               
@@ -22,30 +22,30 @@
               label-for="Custo"
               :label-cols="3"
               >
-              <b-form-input id="Custo" type="text" autocomplete="custo"></b-form-input>
+              <b-form-input id="Custo" v-model= "Custo" type="number" autocomplete="custo"></b-form-input>
             </b-form-group>
            
               
             <b-form-group
               label="Data do Evento" 
-              label-for="date"
+              label-for="Date"
               :label-cols="3"
               >
-              <b-form-input type="date" id="date"></b-form-input>
+              <b-form-input id="dataAtual" v-model= "dataAtual" type="date" ></b-form-input>
             </b-form-group>
             
             <b-form-group
             
             label="Descrição"
-            label-for="basicText"
+            label-for="Descricao"
             :label-cols="3"
             >
-            <b-form-input id="basicText" type="text" ></b-form-input>
+            <b-form-input id="Descricao" type="text" v-model= "Descricao" ></b-form-input>
           </b-form-group>
           
             <div slot="footer">
-              <b-button type="submit" size="xm" variant="primary"> Criar</b-button>
-              <b-button type="submit" size="xm" variant="danger" to="/Eventos"> Cancelar</b-button>
+              <b-button size="xm" variant="primary" @click="criarEvento()"> Criar</b-button>
+              <b-button size="xm" variant="danger" to="/Eventos"> Cancelar</b-button>
             </div>
           </b-form>
       
@@ -59,20 +59,36 @@
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'qs';
 export default {
-  name: 'forms',
+  name: 'adicionarEvento',
   data () {
-    return {
-      selected: [], // Must be an array reference!
-      show: true
-    }
+    return {token:"",Titulo: "", Custo: "",Date: "", Descricao: ""}
   },
   methods: {
-    click () {
-      // do nothing
+    criarEvento(){
+    if (this.Titulo != "" && this.Custo != "" && this.dataAtual  != null ){
+        const data = qs.stringify({token: localStorage.getItem('user_token') ,Titulo: this.Titulo, Custo: this.Custo , Date: this.dataAtual, Descricao: this.Descricao})
+        const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8',}
+        axios.post(process.env.VUE_APP_API+"/evento/criar", data, header).then((response) =>{
+             
+            if (response.status == 201){
+                alert("Evento Criado")
+            }else{
+                
+                alert("Erro")
+            }
+        }).catch(()=>{
+            alert("Erro catch")
+        })
+    }else{
+        alert("Não tem todos os campos!!!")
+    }
     }
   }
 }
+
 </script>
 
 <style scoped>

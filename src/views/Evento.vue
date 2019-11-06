@@ -13,9 +13,9 @@
     
 
     <b-list-group :items="items" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
-        <b-list-group-item  v-for="item in items" v-bind:key="item" to="/eventoSelecionado" class="flex-column align-items-start"  >
+        <b-list-group-item  v-for="item in items" v-bind:key="item" @click="rowClicked(item)" class="flex-column align-items-start"  >
             <h5>
-            {{ item.title }}
+            {{ item.title }} - {{item.date}}
             </h5>
             <p>
                 {{ item.description }}
@@ -29,9 +29,9 @@
 
 <script>
 export default {
-    name: 'evento',
-    inheritAttrs: false,
     
+    name: 'evento',
+    inheritAttrs: false, 
     props: {
        caption: {
             type: String,
@@ -72,8 +72,12 @@ export default {
         return this.items.length
         },
         rowClicked (item) {
-        this.$emit('row-clicked', item)
+           this.$emit('row-clicked', item)
+           this.$router.push({name:'Evento Selecionado',params:{Pid:item.title}})
+           
         }
+
+        
     }
 }
 
