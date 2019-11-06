@@ -11,7 +11,7 @@
                     <h1><strong>{{title}} - {{date}}</strong></h1>
                     </b-col>
                     <b-col md="1">
-                        <b-button variant="link" style="margin-left:50%;margin-top:5%" to="/EditarEvento"><i class="icon-note icons font-2xl"></i></b-button>
+                        <b-button variant="link" style="margin-left:50%;margin-top:5%" @click="editarEvento()" ><i class="icon-note icons font-2xl"></i></b-button>
                     </b-col>
                 </b-row>
             </div>
@@ -50,17 +50,16 @@ export default {
     return {
       selected: [], // Must be an array reference!
       show: true,
-      title: "Titulo",
-      price: 1000,
-      date:"20/10/2020",
-      description:"Lorem ipsum donec accumsan mauris nullam metus aliquam, erat hendrerit pellentesque a purus adipiscing, integer lectus turpis bibendum donec nibh. risus justo eleifend sodales maecenas praesent himenaeos netus magna, metus erat justo vehicula taciti elit taciti potenti scelerisque, conubia diam platea lacus consectetur ac elementum. metus consectetur tristique in elit cursus taciti litora urna, himenaeos ac taciti velit fringilla senectus consectetur elit duis, libero interdum quisque taciti risus eu tortor. cubilia donec diam dapibus volutpat aliquam torquent ultrices, at tortor felis risus id commodo habitant fringilla, diam consectetur vulputate taciti leo imperdiet. ",
-      
+      title: "Iria pegar o id : " + this.$route.params.Pid,
+      price: "2000",
+      date:"2020",
+      description:"Texto"
     }
   },
   methods: {
-    click () {
-      // do nothing
-    }
+    editarEvento(){
+        this.$router.push({name:'Editar Evento',params:{Pid:this.title}})
+    },
   }
 }
 </script>

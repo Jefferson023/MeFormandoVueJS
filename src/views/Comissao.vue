@@ -29,11 +29,11 @@ import { shuffleArray } from '@/shared/utils'
 import cTable from './Table.vue'
 
 const someData = () => shuffleArray([
-  {username: 'Samppa Nori', email: 'teste@teste.com', telefone: '(84)99999-9999' },
-  {username: 'Estavan Lykos', email: 'teste@teste.com', telefone: '(84)99999-9999'},
-  {username: 'Chetan Mohamed', email: 'teste@teste.com', telefone: '(84)99999-9999'},
-  {username: 'Derick Maximinus', email: 'teste@teste.com', telefone: '(84)99999-9999'},
-  {username: 'Friderik Dávid', email: 'teste@teste.com', telefone: '(84)99999-9999'},
+  {username: 'Samppa Nori', email: 'teste1@teste.com', telefone: '(84)99999-9999' },
+  {username: 'Estavan Lykos', email: 'teste2@teste.com', telefone: '(84)99999-9999'},
+  {username: 'Chetan Mohamed', email: 'teste3@teste.com', telefone: '(84)99999-9999'},
+  {username: 'Derick Maximinus', email: 'teste4@teste.com', telefone: '(84)99999-9999'},
+  {username: 'Friderik Dávid', email: 'teste5@teste.com', telefone: '(84)99999-9999'},
 
 ])
 
@@ -49,7 +49,7 @@ export default {
         {key: 'email',label:'E-mail'},
         {key: 'telefone'}
       ],
-      comissaoPagina:false
+      comissaoPagina:true
       
     }
   }

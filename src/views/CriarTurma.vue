@@ -82,7 +82,7 @@ export default {
     
           axios.post(process.env.VUE_APP_API+"/turma/criar", data, header).then((response) =>{
             if (response.status == 201){
-              this.$router.push('/Turma')
+              alert("Turma Criada")
             }else if(response.status == 202){
               
               this.$router.push('/pages/404')

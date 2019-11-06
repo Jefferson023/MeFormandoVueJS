@@ -10,11 +10,13 @@
                 </b-col>
             </b-row>
     </div>
-    <b-table :dark="dark" :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="captions" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
-      <template slot="opcoes" >
+    <b-table>
+    </b-table>
+    <b-table :dark="dark" :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="captions" :current-page="currentPage" :per-page="perPage" >
+      <template slot="opcoes" slot-scope="item" >
         
         <b-button-group size="sm" class="mx-1"  v-if="comissao">
-          <b-btn variant="primary" to="/EditarFormando">Edit</b-btn>
+          <b-btn variant="primary"  @click="rowClicked(item)">{{item}}Edit</b-btn>
           <b-btn variant="danger">Remove</b-btn>
         </b-button-group>
       </template>
@@ -28,7 +30,8 @@
 
 <script>
 
-
+import axios from 'axios';
+import qs from 'qs';
 export default {
   name: 'c-table',
   inheritAttrs: false,
@@ -112,6 +115,12 @@ export default {
     },
     rowClicked (item) {
       this.$emit('row-clicked', item)
+      console.log(item)
+      alert(Object.keys(item)["email"])
+    },
+
+    editar(item){
+      alert(item)
     }
   }
 }

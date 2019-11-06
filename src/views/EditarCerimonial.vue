@@ -14,7 +14,7 @@
               label-for="Nome"
               :label-cols="3"
               >
-              <b-form-input id="Nome" type="text" autocomplete="nome"></b-form-input>
+              <b-form-input id="Nome" v-model= "Nome" type="text" autocomplete="nome"></b-form-input>
             </b-form-group>
             <b-form-group
               
@@ -22,7 +22,7 @@
               label-for="Custo"
               :label-cols="3"
               >
-              <b-form-input id="Custo" type="text" autocomplete="custo"></b-form-input>
+              <b-form-input id="Custo" v-model= "Custo" type="number" autocomplete="custo"></b-form-input>
             </b-form-group>
            
             
@@ -32,12 +32,12 @@
             label-for="basicText"
             :label-cols="3"
             >
-            <b-form-input id="basicText" type="text" ></b-form-input>
+            <b-form-input id="Descricao" v-model= "Descricao" type="text" ></b-form-input>
           </b-form-group>
           
             <div slot="footer">
-              <b-button type="submit" size="xm" variant="primary"> Salvar</b-button>
-              <b-button type="submit" size="xm" variant="danger" to="/Cerimonial"> Cancelar</b-button>
+              <b-button  size="xm" variant="primary" @click="alterarCerimonial()"> Alterar</b-button>
+              <b-button  size="xm" variant="danger" to="/Cerimonial"> Cancelar</b-button>
             </div>
           </b-form>
       
@@ -51,18 +51,33 @@
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'qs';
 export default {
-  name: 'editarCerimonial',
+  name: 'alterarCerimonial',
   data () {
-    return {
-      selected: [], // Must be an array reference!
-      show: true
-      
-    }
+    return {token:"",Nome: "", Custo: "", Descricao: ""}
   },
   methods: {
-    click () {
-      // do nothing
+    alterarCerimonial(){
+    if (this.Nome != "" && this.Custo != ""){
+     
+        const data = qs.stringify({token: localStorage.getItem('user_token') ,Nome: this.Nome, Custo: this.Custo, Descricao: this.Descricao})
+        const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8',}
+        axios.post(process.env.VUE_APP_API+"/cerimonial/alterar", data, header).then((response) =>{
+             alert("Entrou no POST")
+            if (response.status == 201){
+                alert("Cerimonial alterado")
+            }else{
+                
+                alert("Erro")
+            }
+        }).catch(()=>{
+            alert("Erro")
+        })
+    }else{
+        alert("Não tem todos os campos!!!")
+    }
     }
   }
 }

@@ -34,7 +34,7 @@
             <b-button type="submit" size="xm" variant="primary" style="margin-bottom:20px"> Adicionar</b-button>
 
             <ul v-for="item in items" v-bind:key="item">
-                <li :id="'option'+(item.id)">Opção 1 <b-button type="submit" size="sm" variant="danger"03> Remover</b-button></li>
+                <li :id="'option'+(item.id)">Opção 1 <b-button type="submit" size="sm" variant="danger"> Remover</b-button></li>
             </ul
             >
               

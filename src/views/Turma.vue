@@ -1,5 +1,5 @@
 <template>
-  <div class="animated fadeIn" v-if="tem_Turma">
+  <div class="animated fadeIn" v-if="tem_turma">
 
     
     
@@ -36,6 +36,8 @@
 <script>
 import { shuffleArray } from '@/shared/utils'
 import cTable from './Table.vue'
+import axios from 'axios';
+import qs from 'qs';
 
 const someData = () => shuffleArray([
   {username: 'Samppa Nori', email: 'teste@teste.com', cargo: 'Comissão' },
@@ -46,14 +48,17 @@ const someData = () => shuffleArray([
 
 ])
 
+
+
 export default {
   name: 'turma',
   data: {
-    tem_Turma:false
+    
   },
   components: {cTable},
   data: () => {
     return {
+      tem_turma: true,
       items: someData,
       itemsArray: someData(),
       fields: [
@@ -63,29 +68,28 @@ export default {
         {key: 'opcoes'}
       ],
       
-    }
+      }
+      
   },
-   methods: {
-     
-  },
-  computed:{
-    getComissao(){
-      const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8'}
-      const data = qs.stringify({token: localStorage.getItem('user_token')})
-      axios.get(process.env.VUE_APP_API+"/usuario/isComissao", data, header).then((isComissao) =>{
-        if (isComissao == true){
-          console.log(isComissao)
-          console.log("é membro da comissão")
-          this.tem_Turma = true
-          
-        }else{
-          console.log("Não é membro da comissão")
-        }
-      }).catch(()=>{
-        console.log("erro");
-        
-      })
+  /*
+  created()  {
+        const data = qs.stringify({token: localStorage.getItem('user_token'),teste:true})
+        const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8',}
+        axios.get(process.env.VUE_APP_API+"/usuario/confirmadoTurma", data, header).then((response) =>{
+            alert(response.data)
+            if (response.data == true){
+              this.tem_turma = true
+            }else{
+              this.tem_turma = false
+            }
+        }).catch(()=>{
+            alert("Erro catch")
+        })
     }
-  }
+  */ 
 }
+  
+
+ 
+
 </script>

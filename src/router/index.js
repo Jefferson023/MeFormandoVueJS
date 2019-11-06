@@ -71,6 +71,7 @@ const EditarCerimonial = () => import('@/views/EditarCerimonial')
 const EditarFormando = () => import('@/views/EditarFormando')
 const AdicionarFormando = () => import('@/views/AdicionarFormando')
 const AdicionarVotacao = () => import('@/views/AdicionarVotacao')
+const AdicionarCerimonial = () => import('@/views/AdicionarCerimonial')
 const CriarTurma = () => import('@/views/CriarTurma')
 Vue.use(Router)
 
@@ -114,6 +115,16 @@ function configRoutes() {
           component: AdicionarFormando
         },
         {
+          path: 'AdicionarVotacao',
+          name: 'Adicionar Votacao',
+          component: AdicionarVotacao
+        },
+        {
+          path: 'AdicionarCerimonial',
+          name: 'Adicionar Cerimonial',
+          component: AdicionarCerimonial
+        },
+        {
           path: 'CriarTurma',
           name: 'Criar Turma',
           component: CriarTurma
@@ -124,9 +135,9 @@ function configRoutes() {
           component: EditarFormando
         },
         {
-          path: 'AdicionarVotacao',
-          name: 'Adicionar Votação',
-          component: AdicionarVotacao
+          path: 'AdicionarFormando',
+          name: 'Adicionar Formando',
+          component: AdicionarFormando
         },
         {
           path: 'cerimonial',
@@ -144,7 +155,7 @@ function configRoutes() {
           component: Voto
         },
         {
-          path: 'eventoSelecionado',
+          path: '/eventoSelecionado/:Pid',
           name: 'Evento Selecionado',
           component: EventoSelecionado
         },
@@ -154,7 +165,7 @@ function configRoutes() {
           component: AdicionarEvento
         },
         {
-          path: 'EditarEvento',
+          path: '/EditarEvento/:Pid',
           name: 'Editar Evento',
           component: EditarEvento
         },
