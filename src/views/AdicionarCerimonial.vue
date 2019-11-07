@@ -63,11 +63,11 @@ export default {
     if (this.Nome != "" && this.Custo != ""){
         
         const data = qs.stringify({token: localStorage.getItem('user_token') ,Nome: this.Nome, Custo: this.Custo, Descricao: this.Descricao})
-        const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8',}
-        axios.post(process.env.VUE_APP_API+"/cerimonial/criar", data, header).then((response) =>{
+        axios.post(process.env.VUE_APP_API+"/cerimonial/criar", data, {headers:{"content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          'token': localStorage.getItem("user_token")}}).then((response) =>{
             
             if (response.status == 201){
-                alert("Cerimonial criado")
+                this.$router.push({name:'Cerimonial'})
             }else{
                 
                 alert("Erro")

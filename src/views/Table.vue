@@ -16,7 +16,7 @@
       <template slot="opcoes" slot-scope="item" >
         
         <b-button-group size="sm" class="mx-1"  v-if="comissao">
-          <b-btn variant="primary"  @click="rowClicked(item)">{{item}}Edit</b-btn>
+          <b-btn variant="primary"  @click="rowClicked(item.item.email)">Edit</b-btn>
           <b-btn variant="danger">Remove</b-btn>
         </b-button-group>
       </template>
@@ -115,8 +115,8 @@ export default {
     },
     rowClicked (item) {
       this.$emit('row-clicked', item)
-      console.log(item)
-      alert(Object.keys(item)["email"])
+      alert(item)
+      
     },
 
     editar(item){

@@ -63,17 +63,16 @@ export default {
     if (this.Nome != "" && this.Custo != ""){
      
         const data = qs.stringify({token: localStorage.getItem('user_token') ,Nome: this.Nome, Custo: this.Custo, Descricao: this.Descricao})
-        const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8',}
-        axios.post(process.env.VUE_APP_API+"/cerimonial/alterar", data, header).then((response) =>{
-             alert("Entrou no POST")
+        axios.post(process.env.VUE_APP_API+"/cerimonial/alterar", data, {headers:{"content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          'token': localStorage.getItem("user_token")}}).then((response) =>{
+             
             if (response.status == 201){
-                alert("Cerimonial alterado")
+               this.$router.push('/Cerimonial')  
             }else{
                 
-                alert("Erro")
             }
         }).catch(()=>{
-            alert("Erro")
+
         })
     }else{
         alert("Não tem todos os campos!!!")
