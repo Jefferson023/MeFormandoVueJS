@@ -15,7 +15,7 @@
     <b-list-group :items="items" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
         <b-list-group-item  v-for="item in items" v-bind:key="item" @click="rowClicked(item)" class="flex-column align-items-start"  >
             <h5>
-            {{ item.title }} - {{item.date}}
+            {{ item.title }} - {{item.date}} 
             </h5>
             <p>
                 {{ item.description }}
@@ -73,7 +73,7 @@ export default {
         },
         rowClicked (item) {
            this.$emit('row-clicked', item)
-           this.$router.push({name:'Evento Selecionado',params:{Pid:item.title}})
+           this.$router.push({name:'Evento Selecionado',params:{Pid:item.id}})
            
         }
 

@@ -1,73 +1,72 @@
 <template>
-  <div class="animated fadeIn">
-
-    
-    
+  <div ass="animated fadeIn">
     <b-row>
       <b-col lg="12">
-        <evento :table-data="items" :fields="fields" caption="Eventos">
-          
-        </evento>
-
-
+        <evento :table-data="items" :fields="fields" caption="Eventos"></evento>
       </b-col>
-
- 
     </b-row>
-
-    
   </div>
-
 </template>
 
 <script>
-import { shuffleArray } from '@/shared/utils'
-import evento from './Evento.vue'
-import axios from 'axios';
-import qs from 'qs';
-const someData = () => shuffleArray([
-  {title: 'Aula da Saudade',description: 'Samppa Nori',date: '20/06/2019'},
-  {title: 'Missa',description: 'Samppa Nori', date: '20/05/2019'},
-  {title: 'Colação de grau',description: 'Samppa Nori',date: '20/04/2019'},
-  {title: 'Festa de Formatura',description: 'Samppa Nori',date: '20/03/2019'},
-  {title: 'Fotos',description: 'Samppa Nori',date: '20/02/2019'},
-
-])
-
-
+import { shuffleArray } from "@/shared/utils";
+import evento from "./Evento.vue";
+import axios from "axios";
+import qs from "qs";
 export default {
-  
-  name: 'eventos',
-  components: {evento},
+  name: "eventos",
+  components: { evento },
   data: () => {
     return {
-      items: someData,
-      itemsArray: someData(),
+      items: [],
       fields: [
-        {key: 'title'},
-        {key: 'description'},
-        {key: 'date'}
-      ],
-
-      
-    }
+        { key: "title" },
+        { key: "description" },
+        { key: "date" },
+        { key: "id" }
+      ]
+    };
   },
-  created()  {
-        
-        const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8',token: localStorage.getItem('user_token')}
-        axios.get(process.env.VUE_APP_API+"/evento/eventos", header).then((response) =>{
-            if(response.data == null){
-              alert("Null!!!")
-            }else{
-              for( item in response.data){
-                alert(item)
-              }
-            }
-            console.log(response.data)
+  created() {
+    axios
+      .get(process.env.VUE_APP_API + "/usuario/confirmadoTurma", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response.data == true) {
+          this.tem_turma = true;
+        } else {
+          this.tem_turma = false;
+        }
+      })
+      .catch(() => {});
+
+    axios
+      .get(process.env.VUE_APP_API + "/cerimonial/eventos", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response != null) {
+          
+          response.data.forEach(element => {
+            this.items.push({
+              title: element[0],
+              description: element[1],
+              date: element[2],
+              id: element[3]
+            });
             
-        }).catch(()=>{
-            alert("Erro catch")
-        })
-    }
-}
+          });
+        } else {
+        }
+      })
+      .catch(() => {});
+  }
+};
 </script>

@@ -8,7 +8,7 @@
             <div slot="header">
                 <b-row>
                 <b-col md="11">
-                    <h1><strong>{{title}} - {{date}}</strong></h1>
+                    <h1><strong>{{title}} - {{date}} {{id}} </strong></h1>
                     </b-col>
                     <b-col md="1">
                         <b-button variant="link" style="margin-left:50%;margin-top:5%" @click="editarEvento()" ><i class="icon-note icons font-2xl"></i></b-button>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import qs from 'qs';
 export default {
   name: 'forms',
   
@@ -50,16 +52,47 @@ export default {
     return {
       selected: [], // Must be an array reference!
       show: true,
-      title: "Iria pegar o id : " + this.$route.params.Pid,
+      title: "Iria pegar o id : " ,
       price: "2000",
       date:"2020",
-      description:"Texto"
+      description:"Texto",
+      id:this.$route.params.Pid
     }
   },
+  
   methods: {
     editarEvento(){
-        this.$router.push({name:'Editar Evento',params:{Pid:this.title}})
+        this.$router.push({name:'Editar Evento',params:{Pid:this.id}})
     },
+  },
+  created(){
+    const data = qs.stringify({id: this.id})
+    axios
+      .get(process.env.VUE_APP_API + "/evento/eventoSelecionado", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token"),
+          id: this.id
+        }
+        
+      })
+      .then(response => {
+       
+       
+        if (response.data != null) {
+          console.log(response);
+          (this.title = response.data[0][0]),
+          (this.description = response.data[0][1]),
+          (this.date = response.data[0][2]),
+          (this.price = response.data[0][3]);
+        } else {
+          alert("Nulo!!!")
+        }
+      })
+      .catch((e) => {
+        alert(e)
+      });
+
   }
 }
 </script>

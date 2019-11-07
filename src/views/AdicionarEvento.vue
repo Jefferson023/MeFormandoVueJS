@@ -70,11 +70,11 @@ export default {
     criarEvento(){
     if (this.Titulo != "" && this.Custo != "" && this.dataAtual  != null ){
         const data = qs.stringify({token: localStorage.getItem('user_token') ,Titulo: this.Titulo, Custo: this.Custo , Date: this.dataAtual, Descricao: this.Descricao})
-        const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8',}
-        axios.post(process.env.VUE_APP_API+"/evento/criar", data, header).then((response) =>{
+        axios.post(process.env.VUE_APP_API+"/evento/criar", data, {headers:{"content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          'token': localStorage.getItem("user_token")}}).then((response) =>{
              
             if (response.status == 201){
-                alert("Evento Criado")
+                this.$router.push('/eventos') 
             }else{
                 
                 alert("Erro")

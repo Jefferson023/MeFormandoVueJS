@@ -27,23 +27,17 @@
 <script>
 import { shuffleArray } from '@/shared/utils'
 import cTable from './Table.vue'
+import axios from "axios";
+import qs from "qs";
 
-const someData = () => shuffleArray([
-  {username: 'Samppa Nori', email: 'teste1@teste.com', telefone: '(84)99999-9999' },
-  {username: 'Estavan Lykos', email: 'teste2@teste.com', telefone: '(84)99999-9999'},
-  {username: 'Chetan Mohamed', email: 'teste3@teste.com', telefone: '(84)99999-9999'},
-  {username: 'Derick Maximinus', email: 'teste4@teste.com', telefone: '(84)99999-9999'},
-  {username: 'Friderik Dávid', email: 'teste5@teste.com', telefone: '(84)99999-9999'},
-
-])
 
 export default {
   name: 'turma',
   components: {cTable},
   data: () => {
     return {
-      items: someData,
-      itemsArray: someData(),
+      items: [],
+  
       fields: [
         {key: 'username', label: 'Nome', sortable: true},
         {key: 'email',label:'E-mail'},
@@ -52,6 +46,37 @@ export default {
       comissaoPagina:true
       
     }
+  },
+  created(){
+    axios
+      .get(process.env.VUE_APP_API + "/turma/formandos", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response != null) {
+         
+          console.log(response.data);
+          response.data.forEach(element => {
+            console.log(element[1])
+            console.log(element[0])
+            console.log(element[2])
+            if(element[2] == true){
+              this.items.push({
+                username: element[1], email: element[0], cargo: "Comissão"
+              })
+              
+            }else{
+            }
+          });
+        } else {
+          
+          
+        }
+      })
+      .catch(() => {});
   }
 }
 </script>
