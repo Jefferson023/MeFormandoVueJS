@@ -6,7 +6,7 @@
                     <h1>{{caption}}</h1>
                 </b-col>
                 <b-col md="1">
-                    <b-button variant="link" style="margin-left:50%;margin-top:5%" to="/AdicionarEvento"><i class="icon-plus icons font-2xl"></i></b-button>
+                    <b-button variant="link" style="margin-left:50%;margin-top:5%" to="/AdicionarEvento"><i class="icon-plus icons font-2xl" v-if="comissao"></i></b-button>
                 </b-col>
             </b-row>
         </div>
@@ -28,6 +28,9 @@
 </template>
 
 <script>
+import { type } from 'os'
+import axios from "axios";
+import qs from "qs";
 export default {
     
     name: 'evento',
@@ -49,6 +52,10 @@ export default {
         type: Number,
         default: 20
         },
+        comissao:{
+            type:Boolean,
+            default: false
+        }
 
     },
     data: () => {
@@ -78,6 +85,23 @@ export default {
         }
 
         
+    },
+    created(){
+        axios.get(process.env.VUE_APP_API + "/usuario/confirmadoComissao", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response.data == true) {
+          this.comissao = true;
+        } else {
+          this.comissao = false;
+        }
+      })
+      .catch(() => {});
+      
     }
 }
 

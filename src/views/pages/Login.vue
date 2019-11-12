@@ -70,10 +70,12 @@ export default {
           localStorage.setItem("user_token", response.headers.token)
           this.$router.push('/')  
         }else{
+          alert("Algo errado1!!!")
           //usuário ou senha inválido
         }
       }).catch(()=>{
         console.log("erro");
+        alert("Algo errado!!!")
         
       })
     }

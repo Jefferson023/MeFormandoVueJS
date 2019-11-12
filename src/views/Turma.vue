@@ -23,7 +23,8 @@
         size="xm"
         variant="primary"
         style="margin-right:10px"
-      >Entrar numa turma</b-button>
+        to="/ConvitesDeTurma"
+      >Visualizar Convites de Turma</b-button>
       <b-button type="submit" size="xm" variant="primary" to="/CriarTurma">Criar uma turma</b-button>
     </b-card>
   </div>

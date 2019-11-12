@@ -16,13 +16,14 @@
       <b-dropdown-item to="/perfil"><i class="fa fa-user"  /> Perfil</b-dropdown-item>
 
       <b-dropdown-divider />
-      <b-dropdown-item to="/pages/login"><i class="fa fa-lock" /> Sair</b-dropdown-item>
+      <b-dropdown-item to="/logout"><i class="fa fa-lock" /> Sair</b-dropdown-item>
     </template>
   </AppHeaderDropdown>
 </template>
 
 <script>
 import { HeaderDropdown as AppHeaderDropdown } from '@coreui/vue'
+import { METHODS } from 'http'
 export default {
   name: 'DefaultHeaderDropdownAccnt',
   components: {
@@ -30,6 +31,12 @@ export default {
   },
   data: () => {
     return { itemsCount: 42 }
+  },
+  methods: {
+    sair(){
+
+    }
   }
+
 }
 </script>
