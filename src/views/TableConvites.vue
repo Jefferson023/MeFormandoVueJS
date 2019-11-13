@@ -7,8 +7,8 @@
       <template slot="opcoes" slot-scope="item" >
         
         <b-button-group size="sm" class="mx-1">
-          <b-btn variant="primary"  @click="rowClicked(item.item)">Aceitar</b-btn>
-          <b-btn variant="danger">Recusar</b-btn>
+          <b-btn variant="primary"  @click="rowClickedAceitar(item.item)">Aceitar</b-btn>
+          <b-btn variant="danger" @click="rowClickedRecusar(item.item)">Recusar</b-btn>
         </b-button-group>
       </template>
     </b-table>
@@ -95,12 +95,13 @@ export default {
     getRowCount: function () {
       return this.items.length
     },
-   rowClicked (item) {
+    rowClickedAceitar (item) {
        
       this.$emit('row-clicked', item)
       alert(item.id)
       const data = qs.stringify({
-          id: item.id
+          id: item.id,
+          idConvite: item.idConvite
         });
       axios
       .post(process.env.VUE_APP_API + "/usuario/aceitarConvite",data, {
@@ -123,6 +124,42 @@ export default {
     
       
     },
+   rowClickedRecusar(item) {
+       
+      this.$emit('row-clicked', item)
+      alert(item.id)
+      const data = qs.stringify({
+          id: item.id,
+          idConvite: item.idConvite
+        });
+      axios
+      .post(process.env.VUE_APP_API + "/usuario/recusarConvite",data, {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response.status == 201) {
+            alert("Deu certo!!!")
+            this.$router.push('/')  
+        } else {
+            alert("Deu errado!!!")
+        }
+      })
+      .catch(() => {
+          alert("Deu certo(CATCH)!!!")
+      });
+    
+      
+    },
+
+    
+  
+  
+  
+  
   }
+  
 }
 </script>

@@ -5,7 +5,7 @@
                 <b-col md="11">
                     <h1>{{caption}}</h1>
                 </b-col>
-                <b-col md="1" v-if="comissaoPagina">
+                <b-col md="1" v-if="comissao">
                     <b-button variant="link" style="margin-left:50%;margin-top:5%" to="/AdicionarFormando"><i class="icon-plus icons font-2xl"></i></b-button>
                 </b-col>
             </b-row>
