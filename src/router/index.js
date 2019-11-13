@@ -73,6 +73,7 @@ const AdicionarFormando = () => import('@/views/AdicionarFormando')
 const AdicionarVotacao = () => import('@/views/AdicionarVotacao')
 const AdicionarCerimonial = () => import('@/views/AdicionarCerimonial')
 const CriarTurma = () => import('@/views/CriarTurma')
+const ConvitesDeTurma = () => import('@/views/ConvitesDeTurma')
 Vue.use(Router)
 
 function autenticado(to, from, next) {
@@ -113,6 +114,11 @@ function configRoutes() {
           path: 'AdicionarFormando',
           name: 'Adicionar Formando',
           component: AdicionarFormando
+        },
+        {
+          path: 'ConvitesDeTurma',
+          name: 'Convites para Turma ',
+          component: ConvitesDeTurma
         },
         {
           path: 'AdicionarVotacao',

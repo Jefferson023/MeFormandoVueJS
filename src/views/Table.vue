@@ -13,9 +13,9 @@
     <b-table>
     </b-table>
     <b-table :dark="dark" :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="captions" :current-page="currentPage" :per-page="perPage" >
-      <template slot="opcoes" slot-scope="item" >
+      <template slot="opcoes" slot-scope="item" v-if="comissao" >
         
-        <b-button-group size="sm" class="mx-1"  v-if="comissao">
+        <b-button-group size="sm" class="mx-1" >
           <b-btn variant="primary"  @click="rowClicked(item.item.email)">Edit</b-btn>
           <b-btn variant="danger">Remove</b-btn>
         </b-button-group>
@@ -84,6 +84,10 @@ export default {
     comissaoPagina:{
       type :Boolean,
       default: true
+    },
+    comissao:{
+      type :Boolean,
+      default: true
     }
   },
   data: () => {
@@ -122,6 +126,23 @@ export default {
     editar(item){
       alert(item)
     }
+  },
+  created(){
+    axios.get(process.env.VUE_APP_API + "/usuario/confirmadoComissao", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response.data == true) {
+          this.comissao = true;
+        } else {
+          this.comissao = false;
+        }
+      })
+      .catch(() => {});
+      
   }
 }
 </script>

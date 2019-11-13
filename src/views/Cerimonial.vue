@@ -17,6 +17,7 @@
                   variant="primary"
                   style="margin-left:50%; margin-top:5%"
                   to="/EditarCerimonial"
+                  v-if="comissao"
                 >Editar</b-button>
               </b-col>
             </b-row>
@@ -59,7 +60,8 @@
             type="submit"
             size="gm"
             variant="primary"
-            to="/AdicionarCerimonial"
+            to="/AdicionarCerimonial" 
+            v-if="comissao"
           >Cadastrar Cerimonial</b-button>
         </b-card>
       </b-col>
@@ -81,7 +83,8 @@ export default {
       description:
         "Lorem ipsum donec accumsan mauris nullam metus aliquam, erat hendrerit pellentesque a purus adipiscing, integer lectus turpis bibendum donec nibh. risus justo eleifend sodales maecenas praesent himenaeos netus magna, metus erat justo vehicula taciti elit taciti potenti scelerisque, conubia diam platea lacus consectetur ac elementum. metus consectetur tristique in elit cursus taciti litora urna, himenaeos ac taciti velit fringilla senectus consectetur elit duis, libero interdum quisque taciti risus eu tortor. cubilia donec diam dapibus volutpat aliquam torquent ultrices, at tortor felis risus id commodo habitant fringilla, diam consectetur vulputate taciti leo imperdiet. ",
       price: "1000",
-      tem_cerimonial: false
+      tem_cerimonial: false,
+      comissao: false
     };
   },
   methods: {
@@ -125,6 +128,22 @@ export default {
         }
       })
       .catch(() => {});
+
+      axios.get(process.env.VUE_APP_API + "/usuario/confirmadoComissao", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response.data == true) {
+          this.comissao = true;
+        } else {
+          this.comissao = false;
+        }
+      })
+      .catch(() => {});
+      
   }
 };
 </script>
