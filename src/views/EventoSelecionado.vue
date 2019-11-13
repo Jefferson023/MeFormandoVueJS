@@ -11,7 +11,7 @@
                     <h1><strong>{{title}} - {{date}} {{id}} </strong></h1>
                     </b-col>
                     <b-col md="1">
-                        <b-button variant="link" style="margin-left:50%;margin-top:5%" @click="editarEvento()" ><i class="icon-note icons font-2xl"></i></b-button>
+                        <b-button  v-if="comissao" variant="link" style="margin-left:50%;margin-top:5%" @click="editarEvento()" ><i class="icon-note icons font-2xl"></i></b-button>
                     </b-col>
                 </b-row>
             </div>
@@ -93,6 +93,24 @@ export default {
         alert(e)
       });
 
+    axios.get(process.env.VUE_APP_API + "/usuario/confirmadoComissao", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response.data == true) {
+          this.comissao = true;
+        } else {
+          this.comissao = false;
+        }
+      })
+      .catch(() => {});
+  
+  
+  
+  
   }
 }
 </script>

@@ -56,7 +56,7 @@ export default {
           console.log(response.data);
           response.data.forEach(element => {
             this.items.push({
-            turma: element[0], formando: element[1],id:element[2]
+            turma: element[0], formando: element[1],id:element[2],idConvite:element[3]
           });
           })
         } else {
