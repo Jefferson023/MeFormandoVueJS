@@ -1,6 +1,13 @@
 <template>
   <div class="app flex-row align-items-center">
     <div class="container">
+
+    <p v-if="errors.length">
+    <b-alert v-for="error in errors" variant="danger" show>
+      {{ error }}
+    </b-alert>
+    </p>
+
       <b-row class="justify-content-center">
         <b-col md="8">
           <b-card-group>
@@ -53,7 +60,11 @@ import qs from 'qs';
 export default {
   name: 'Login',
   data() {
-    return {password: "", email: ""};
+    return {
+      password: "",
+      email: "",
+      errors: []
+      }
   },
   props:{
     DeuCerto:{
@@ -63,22 +74,21 @@ export default {
   },
   methods: {
     logar(){
+    this.errors = []
       const data = qs.stringify({email: this.email, senha: this.password})
       const header = {'content-type': 'application/x-www-form-urlencoded;charset=utf-8'}
       axios.post(process.env.VUE_APP_API+"/usuario/logar", data, header).then((response) =>{
         if (response.status == 201){
           localStorage.setItem("user_token", response.headers.token)
-          this.$router.push('/')  
+          this.$router.push('/')
         }else{
-          alert("Algo errado1!!!")
-          //usuário ou senha inválido
+        this.errors.push(response.headers.erro)
         }
       }).catch(()=>{
-        console.log("erro");
-        alert("Algo errado!!!")
-        
+        this.errors.push("Desculpe, algo deu errado")
+
       })
     }
   }
-}  
+}
 </script>

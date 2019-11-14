@@ -90,7 +90,7 @@ export default {
               if (response.status == 201){
                 this.$router.push('/pages/login')
               }else{
-                this.errors.push(response.status)
+                this.errors.push(response.headers.erro)
               }
             }).catch(()=>{
               this.$router.push('/pages/500')
