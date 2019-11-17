@@ -1,24 +1,24 @@
 <template>
-  <div class="animated fadeIn">
-
-    
-    
+  <div class="animated fadeIn">   
     <b-row>
+      <b-col md="12" v-if="comissao">
+        <Button @click="criarMensalidade()" type = "button" class="btn btn-primary" style="margin-left:80%;"><i class="icon-plus icons font-2xl"></i> Nova Mensalidade</Button>
+      </b-col>
       <b-col lg="12">
-        <c-table :table-data="items" :fields="fields" caption="<h1>Pagamentos</h1>">
+        <c-table :table-data="pendentes" :fields="fields" caption = "Pagamentos Pendentes">
           
         </c-table>
-        <!--- Buttão que quero colocar como opção para menbro da comissão
-       <b-button-group size="sm" class="mx-1">
-          <b-btn>New</b-btn>
-          <b-btn>Edit</b-btn>
-        </b-button-group>
-        -->
-
       </b-col>
 
  
-    </b-row><!--/.row-->
+    </b-row>
+    <b-row>
+      <b-col lg="12">
+        <c-table :table-data="realizados" :fields="fields2" caption = "Pagamentos Realizados">
+          
+        </c-table>
+      </b-col>
+    </b-row>
 
     
   </div>
@@ -26,35 +26,63 @@
 </template>
 
 <script>
-import { shuffleArray } from '@/shared/utils'
-import cTable from './TablePagamento.vue'
-
-const someData = () => shuffleArray([
-  {mes: 'Janeiro', vencimento: '15/01/2020', valor: '100' ,pago: true},
-  {mes: 'Fevereiro', vencimento: '15/02/2020', valor: '100',pago: true},
-  {mes: 'Março', vencimento: '15/03/2020', valor: '100',pago: false},
-  {mes: 'Abril', vencimento: '15/04/2020', valor: '100',pago: true},
-  {mes: 'Maio', vencimento: '15/05/2020', valor: '100',pago: true},
-
-])
-
+import axios from 'axios'
+import cTable from "./TablePagamento.vue";
 export default {
   name: 'pagamentos',
-  components: {cTable},
+  components: {cTable}, 
   data: () => {
     return {
-      items: someData,
-      itemsArray: someData(),
+      pendentes: [],
+      realizados: [],
       fields: [
-        {key: 'mes', label: 'Mês', sortable: true},
-        {key: 'vencimento'},
-        {key: 'valor', sortable: true},
-        {key: 'pago'},
-        
-
+        {key: 'data', label: 'Data', sortable: true},
+        {key: 'valor', sortable: true}
       ],
-      
+      fields2: [
+        {key: 'data', label: 'Data', sortable: true},
+        {key: 'valor', sortable: true},
+      ],
+      comissao: false
     }
-  }
+  },
+  methods: {
+    criarMensalidade(){
+      this.$router.push("/mensalidade")
+    },
+  },
+  created(){
+    axios.get(process.env.VUE_APP_API + "/usuario/confirmadoComissao", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        this.comissao = response.data
+      })
+      .catch(() => {
+      });  
+
+    axios.get(process.env.VUE_APP_API + "/pagamento/mensalidades", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        var mensalidades = response.data
+        mensalidades.array.forEach(element => {
+          if (element.isPago == true){
+            this.realizados.push([element.mes, element.valor])
+          }else{
+            this.pendentes.push([element.mes, element.valor])
+          }
+        });
+        console.log(response);
+      })
+      .catch(() => {
+      });  
+  }  
 }
 </script>

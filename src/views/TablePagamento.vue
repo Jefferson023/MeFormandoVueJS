@@ -1,29 +1,39 @@
 <template>
   <b-card>
-    <div slot="header" v-html="caption"></div>
-    <b-table :dark="dark" :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="captions" :current-page="currentPage" :per-page="perPage" @row-clicked="rowClicked">
-      <template slot="pago" slot-scope="data">
-        <!-- <b-badge :variant="getBadge(data.item.status)">{{data.item.status}}</b-badge> -->
-         <input type="checkbox" :checked="getChecked(data.item.pago)" class="form-check-input" id="exampleCheck1">
-         
-
-
+    <div slot="header">
+      <b-row>
+                <b-col md="11">
+                    <h1>{{caption}}</h1>
+                </b-col>
+      </b-row>
+    </div>
+    <b-table>
+    </b-table>
+    <b-table :dark="dark" :hover="hover" :striped="striped" :bordered="bordered" :small="small" :fixed="fixed" responsive="sm" :items="items" :fields="captions" :current-page="currentPage" :per-page="perPage" >
+      <template slot="opcoes" slot-scope="item" v-if="comissao" >
+        
+        <b-button-group size="sm" class="mx-1" >
+          <b-btn variant="primary"  @click="rowClicked(item.item.email)">Edit</b-btn>
+          <b-btn variant="danger">Remove</b-btn>
+        </b-button-group>
       </template>
     </b-table>
-    <nav>
-      <b-button class="d-sm-down-none" variant="success">Salvar</b-button>
-    </nav>
-    
   </b-card>
 </template>
 
 <script>
 
-
+import axios from 'axios';
+import qs from 'qs';
 export default {
   name: 'c-table',
   inheritAttrs: false,
+  
   props: {
+    comissao:{
+      type: Boolean,
+      default: false
+    },
     caption: {
       type: String,
       default: 'Table'
@@ -63,6 +73,14 @@ export default {
     dark: {
       type: Boolean,
       default: false
+    },
+    comissaoPagina:{
+      type :Boolean,
+      default: true
+    },
+    comissao:{
+      type :Boolean,
+      default: false
     }
   },
   data: () => {
@@ -74,19 +92,19 @@ export default {
   computed: {
     items: function() {
       const items =  this.tableData
+      const comissaoPagina = this.comissaoPagina
       return Array.isArray(items)  ? items : items()
     },
     totalRows: function () { return this.getRowCount() },
-    captions: function() { return this.fields }
+    captions: function() { return this.fields },
+    
   },
   methods: {
-   
-    getChecked(pago) {
-      if(pago == true){
-          return true
-      }else{
-         return  false
-      }
+    getBadge (status) {
+      return status === 'pagamento' ? 'pagamento'
+        : status === 'Inactive' ? 'secondary'
+          : status === 'Pending' ? 'warning'
+            : status === 'Banned' ? 'danger' : 'primary'
             
     },
     getRowCount: function () {
@@ -94,7 +112,29 @@ export default {
     },
     rowClicked (item) {
       this.$emit('row-clicked', item)
+      alert(item)
+      
+    },
+
+    editar(item){
+      alert(item)
     }
-  }
-}
+  },
+  created(){
+    axios.get(process.env.VUE_APP_API + "/usuario/confirmadoComissao", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response.data == true) {
+          this.comissao = true;
+        } else {
+          this.comissao = false;
+        }
+      })
+      .catch(() => {})
+  },
+}  
 </script>

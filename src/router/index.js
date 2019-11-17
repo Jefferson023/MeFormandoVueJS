@@ -59,6 +59,7 @@ const Widgets = () => import('@/views/Widgets')
 const Turma = () => import('@/views/Turma')
 const Perfil = () => import('@/views/Perfil')
 const Pagamentos = () => import('@/views/Pagamentos')
+const AdicionarMensalidade = () => import('@/views/AdicionarMensalidade')
 const Votacoes = () => import('@/views/Votacoes')
 const Voto = () => import('@/views/Voto')
 const Comissao = () => import('@/views/Comissao')
@@ -189,6 +190,11 @@ function configRoutes() {
           path: 'pagamentos',
           name: 'Pagamentos',
           component: Pagamentos
+        },
+        {
+          path: 'mensalidade',
+          name: 'Adicionar Mensalidade',
+          component: AdicionarMensalidade
         },
         {
           path: 'perfil',
