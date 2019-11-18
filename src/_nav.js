@@ -27,16 +27,14 @@ export default {
       icon: 'icon-briefcase',
     },
     {
-      name: 'Arrecadações',
-      url:'',
-      icon: 'icon-graduation',
-    },
-    {
       name: 'Eventos',
       url:'/eventos',
       icon: 'icon-calendar',
     },
-   
-    
+    {
+      name: 'Arrecadações',
+      url:'',
+      icon: 'icon-graduation',
+    }
   ]
 }

@@ -8,17 +8,15 @@
               <b-col md="11">
                 <h1>
                   <strong>Cerimonial</strong>
-                </h1>
-              </b-col>
-              <b-col>
                 <b-button
                   type="submit"
                   size="gm"
                   variant="primary"
-                  style="margin-left:50%; margin-top:5%"
+                  style="margin-left: 75%;"
                   to="/EditarCerimonial"
                   v-if="comissao"
                 >Editar</b-button>
+                </h1>
               </b-col>
             </b-row>
           </div>
@@ -32,7 +30,7 @@
           <div slot="footer">
             <b-row>
               <b-col>
-                <h2>Preço:R${{price}}</h2>
+                <h2>Preço: R$ {{price}}</h2>
               </b-col>
             </b-row>
           </div>
@@ -54,13 +52,13 @@
           </div>
 
           <h3>
-            <strong>Não existe um cerimonial cadastrado!!!</strong>
+            <strong>Não existe um cerimonial cadastrado!</strong>
           </h3>
           <b-button
             type="submit"
             size="gm"
             variant="primary"
-            to="/AdicionarCerimonial" 
+            to="/AdicionarCerimonial"
             v-if="comissao"
           >Cadastrar Cerimonial</b-button>
         </b-card>
@@ -122,14 +120,15 @@ export default {
         if (response != null) {
           console.log(response.data);
           (this.title = response.data[0][0]),
-          (this.description = response.data[0][1]),
-          (this.price = response.data[0][2]);
+            (this.description = response.data[0][1]),
+            (this.price = response.data[0][2]);
         } else {
         }
       })
       .catch(() => {});
 
-      axios.get(process.env.VUE_APP_API + "/usuario/confirmadoComissao", {
+    axios
+      .get(process.env.VUE_APP_API + "/usuario/confirmadoComissao", {
         headers: {
           "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           token: localStorage.getItem("user_token")
@@ -143,7 +142,6 @@ export default {
         }
       })
       .catch(() => {});
-      
   }
 };
 </script>
