@@ -72,11 +72,15 @@ export default {
       })
       .then(response => {
         var mensalidades = response.data
-        mensalidades.array.forEach(element => {
-          if (element.isPago == true){
+        mensalidades.forEach(element => {
+          if (element.pago == true){
             this.realizados.push([element.mes, element.valor])
           }else{
-            this.pendentes.push([element.mes, element.valor])
+            var arr = []
+            var data = new Date(element.mes)
+            arr.push(data.toLocaleDateString())
+            arr.push(element.valor)
+            this.pendentes.push(arr)
           }
         });
         console.log(response);

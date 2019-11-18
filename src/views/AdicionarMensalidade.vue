@@ -45,7 +45,7 @@ export default {
       if (mes.length == 1){
         mes = '0' + mes
       }
-      var mesData = mes+ "/01" +"/"+ d.getFullYear()
+      var mesData = "01/"+mes+"/"+ d.getFullYear()
 
       const data = qs.stringify({
           token: localStorage.getItem("user_token"),
