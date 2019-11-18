@@ -38,6 +38,16 @@ export default {
     };
   },
   methods: {
+      makeToast(title = null, text = null, variant = null) {
+      this.$bvToast.toast(text, {
+        title: title,
+        variant: variant,
+        toaster: "b-toaster-top-center",
+        solid: true,
+        autoHideDelay: 8000,
+        appendToast: true
+      });
+    },
     convidarFormando() {
       if (
         this.Email != ""
@@ -52,21 +62,20 @@ export default {
           'token': localStorage.getItem("user_token")
         };
         axios
-          .post(process.env.VUE_APP_API + "/turma/convidar", data, {headers:{"content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          .post(process.env.VUE_APP_API + "/convites/convidar", data, {headers:{"content-type": "application/x-www-form-urlencoded;charset=utf-8",
           'token': localStorage.getItem("user_token")}})
           .then(response => {
             if (response.status == 201) {
               this.$router.push({name:'Turma'})
             }else{
-              alert(response.status)
-              alert(localStorage.getItem("user_token"))
+              this.makeToast("Erro", response.headers.erro, "danger")
             }
           })
           .catch((e) => {
-            alert(e);
+            this.makeToast("Aviso", "Desculpe, algo deu errado ao tentar conectar a API. Chama a boysinha da TI. " + e, "warning")
           });
       } else {
-        alert("E-mail obrigatorio");
+        this.makeToast("Erro", "E-mail obrigatorio", "danger")
       }
     }
   }
