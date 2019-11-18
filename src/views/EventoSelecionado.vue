@@ -8,10 +8,10 @@
             <div slot="header">
                 <b-row>
                 <b-col md="11">
-                    <h1><strong>{{title}} - {{date}} {{id}} </strong></h1>
-                    </b-col>
+                    <h1><strong>{{title}} - {{date}}  </strong></h1>
+                </b-col>
                     <b-col md="1">
-                        <b-button  v-if="comissao" variant="link" style="margin-left:50%;margin-top:5%" @click="editarEvento()" ><i class="icon-note icons font-2xl"></i></b-button>
+                        
                     </b-col>
                 </b-row>
             </div>
@@ -28,6 +28,12 @@
                 
                 </b-col>
                 
+            </b-row>
+            <b-row>
+            <div slot="footer">
+              <b-button size="xm" variant="primary" @click="editarEvento()">Editar</b-button>
+              <b-button size="xm" variant="danger" to="/Eventos">Voltar</b-button>
+            </div>
             </b-row>
               
         </div>

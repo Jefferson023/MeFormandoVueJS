@@ -22,7 +22,7 @@
               label-for="Custo"
               :label-cols="3"
               >
-              <b-form-input id="Custo" v-model= "Custo" type="number" autocomplete="custo"></b-form-input>
+              <b-form-input id="Custo" v-model= "Custo" type="number" prepend-icon="attach_money" autocomplete="custo"></b-form-input>
             </b-form-group>
            
               
@@ -64,7 +64,7 @@ import qs from 'qs';
 export default {
   name: 'adicionarEvento',
   data () {
-    return {token:"",Titulo: "", Custo: "",Date: "", Descricao: ""}
+    return {token:"",Titulo: "", Custo: "", Date: "", Descricao: ""}
   },
    methods: {
     makeToast(title = null, text = null, variant = null) {
