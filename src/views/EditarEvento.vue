@@ -5,7 +5,7 @@
         <b-card>
           <div slot="header">
             <h2>
-              <strong>Evento - {{id}}</strong>
+              <strong>Evento </strong>
             </h2>
           </div>
           <b-form>
@@ -51,6 +51,16 @@ export default {
     };
   },
   methods: {
+    makeToast(title = null, text = null, variant = null) {
+      this.$bvToast.toast(text, {
+        title: title,
+        variant: variant,
+        toaster: "b-toaster-top-center",
+        solid: true,
+        autoHideDelay: 8000,
+        appendToast: true
+      });
+    },
     editarEvento() {
       if (this.Titulo != "" && this.Custo != "" && this.dataAtual != null) {
         const data = qs.stringify({
@@ -72,15 +82,14 @@ export default {
             if (response.status == 201) {
               this.$router.push({ name: "Eventos" });
             } else {
-              alert("Erro!!!")
+              this.makeToast("Erro", response.headers.erro, "danger")
             }
-          })
-          .catch((e) => {
-            alert(e);
-          });
-      } else {
-        alert("Não tem todos os campos!!!");
-      }
+            }).catch(()=>{
+                this.makeToast("Aviso", "Erro ao conectar com a API", "warning")
+            })
+        }else{
+            this.makeToast("Erro", "Preencha todos os campos", "danger")
+        }
     }
   }
 };
