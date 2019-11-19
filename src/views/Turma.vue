@@ -23,14 +23,20 @@
 
           <h4><strong>Instituicao:</strong> {{ instituicao }}</h4>
           <h4><strong>Curso:</strong> {{ curso }}</h4>
-          <h4><strong>Ano:</strong> {{ periodo }}</h4>
+          <h4><strong>Ano de Formacao:</strong> {{ periodo }}</h4>
         </b-card>
       </b-col>
     </b-row>
 
     <b-row>
       <b-col lg="12">
-        <c-table :table-data="itemsParticipantes" :fields="fields" :caption="caption"></c-table>
+        <c-table :table-data="itensParticipantes" :fields="fieldsParticipantes" :caption="caption"></c-table>
+      </b-col>
+    </b-row>
+
+    <b-row>
+      <b-col lg="12">
+        <c-table :table-data="itensConvidados" :fields="fieldsConvidados" :caption="captionConv"></c-table>
       </b-col>
     </b-row>
   </div>
@@ -70,17 +76,26 @@ export default {
   data: () => {
     return {
       tem_turma: false,
+      idTurma: 0,
       titulo: "",
       instituicao: "",
       curso: "",
       qtd: "",
       periodo: "",
       caption: "",
-      itemsParticipantes: [],
-      fields: [
+      captionConv: "",
+      itensParticipantes: [],
+      itensConvidados: [],
+      fieldsParticipantes: [
         { key: "username", label: "Nome", sortable: true },
         { key: "email", label: "E-mail" },
         { key: "cargo", sortable: true },
+        { key: "opcoes" }
+      ],
+      fieldsConvidados: [
+        { key: "username", label: "Nome", sortable: true },
+        { key: "email", label: "E-mail" },
+        { key: "status", label: "Status", sortable: true },
         { key: "opcoes" }
       ]
     };
@@ -105,6 +120,7 @@ export default {
             this.periodo = response.data[4] + "." + response.data[5]
             this.qtd = response.data[6]
             this.caption = "Participantes (" + this.qtd + ")" 
+            this.idTurma = response.data[7]
           } else {
             this.tem_turma = false
           }
@@ -123,30 +139,45 @@ export default {
       })
       .then(response => {
         if (response != null) {
-          console.log(response.data);
           response.data.forEach(element => {
-            console.log(element[1]);
-            console.log(element[0]);
-            console.log(element[2]);
             if (element[2] == true) {
-              this.itemsParticipantes.push({
+              this.itensParticipantes.push({
                 username: element[1],
                 email: element[0],
                 cargo: "Comissão"
               });
             } else {
-              this.itemsParticipantes.push({
+              this.itensParticipantes.push({
                 username: element[1],
                 email: element[0],
                 cargo: "Formando"
               });
             }
           });
-        } else {
-          //do something
         }
       })
       .catch(() => {});
+
+     axios
+      .get(process.env.VUE_APP_API + "/convites/convidados", {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          token: localStorage.getItem("user_token")
+        }
+      })
+      .then(response => {
+        if (response != null) {
+          response.data.forEach(element => {
+            this.itensConvidados.push({
+                username: element[0],
+                email: element[1],
+                status: element[2]
+            })
+          });
+          this.captionConv = "Conviados (" + response.data.length + ")" 
+        }
+      })
+      .catch((e) => { alert("nao pode bucar  lista de conv na api " + e) });
   }
 };
 </script>
