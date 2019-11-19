@@ -33,7 +33,7 @@ export default {
     },
     {
       name: 'Arrecadações',
-      url:'',
+      url:'/arrecadacoes',
       icon: 'icon-graduation',
     }
   ]

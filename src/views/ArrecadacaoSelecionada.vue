@@ -8,7 +8,7 @@
             <div slot="header">
                 <b-row>
                 <b-col md="11">
-                    <h1><strong>{{title}} - {{date}}  </strong></h1>
+                    <h1><strong>{{titulo}} </strong></h1>
                 </b-col>
                     <b-col md="1">
                         
@@ -16,20 +16,21 @@
                 </b-row>
             </div>
             
-            <h4>{{description}} </h4>
-
+            <h4><strong>Data inicial:</strong> {{ dateInicial }}</h4>
+            <h4><strong>Data final:</strong> {{ dateFinal }}</h4>
+           
             <div slot="footer">
             <b-row>
                 <b-col >
-                <h2>Preço:R${{price}}</h2>
+                <h2>Custo: R$ {{custo}} - Ganho: R$ {{ganho}}</h2>
                 
                 </b-col>
                 
             </b-row>
             <b-row>
             <div slot="footer">
-              <b-button size="xm" variant="primary" @click="editarEvento()">Editar</b-button>
-              <b-button size="xm" variant="danger" to="/Eventos">Voltar</b-button>
+              <b-button size="xm" variant="primary" @click="editarArrecadacao()">Editar</b-button>
+              <b-button size="xm" variant="danger" to="/Arrecadacoes">Voltar</b-button>
             </div>
             </b-row>
               
@@ -55,23 +56,24 @@ export default {
     return {
       selected: [], // Must be an array reference!
       show: true,
-      title: "Iria pegar o id : " ,
-      price: "2000",
-      date:"2020",
-      description:"Texto",
+      titulo: "Iria pegar o id : " ,
+      custo: "1000",
+      ganho: "2000",
+      dateInicial:"2020",
+      dateFinal: "2020",
       id:this.$route.params.Pid
     }
   },
   
   methods: {
-    editarEvento(){
-        this.$router.push({name:'Editar Evento',params:{Pid:this.id}})
+    editarArrecadacao(){
+        this.$router.push({name:'Editar Arrecadacao',params:{Pid:this.id}})
     },
   },
   created(){
     const data = qs.stringify({id: this.id})
     axios
-      .get(process.env.VUE_APP_API + "/evento/eventoSelecionado", {
+      .get(process.env.VUE_APP_API + "/arrecadacao/projetoArrecadacaoSelecionado", {
         headers: {
           "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           token: localStorage.getItem("user_token"),
@@ -80,14 +82,15 @@ export default {
         
       })
       .then(response => {
-       
-       
         if (response.data != null) {
           console.log(response);
-          (this.title = response.data[0][0]),
-          (this.description = response.data[0][1]),
-          (this.date = response.data[0][2]),
-          (this.price = response.data[0][3]);
+          response.data.forEach(element => {          
+          (this.titulo = element[0]),
+          (this.custo = element[1]),
+          (this.ganho = element[2]),
+          (this.dateInicial = element[3]),
+          (this.dateFinal = element[4]);
+          })
         } else {
           alert("Nulo!!!")
         }
