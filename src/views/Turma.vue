@@ -87,7 +87,7 @@ export default {
   },
   created() {
     axios
-      .get(process.env.VUE_APP_API + "/turma/por_formando", {
+      .get(process.env.VUE_APP_API + "/usuario/turma", {
         headers: {
           "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           token: localStorage.getItem("user_token")
