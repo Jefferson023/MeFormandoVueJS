@@ -142,14 +142,14 @@ export default {
           response.data.forEach(element => {
             if (element[2] == true) {
               this.itensParticipantes.push({
-                username: element[1],
-                email: element[0],
+                username: element[0],
+                email: element[1],
                 cargo: "Comissão"
               });
             } else {
               this.itensParticipantes.push({
-                username: element[1],
-                email: element[0],
+                username: element[0],
+                email: element[1],
                 cargo: "Formando"
               });
             }

@@ -66,6 +66,7 @@ export default {
           'token': localStorage.getItem("user_token")}})
           .then(response => {
             if (response.status == 201) {
+              alert("Convite enviado com sucesso")
               this.$router.push({name:'Turma'})
             }else{
               this.makeToast("Erro", response.headers.erro, "danger")

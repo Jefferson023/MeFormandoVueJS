@@ -84,6 +84,7 @@ export default {
           'token': localStorage.getItem("user_token")}}).then((response) =>{
              
             if (response.status == 201){
+              alert("Evento adicionado com sucesso")
                 this.$router.push('/eventos') 
             }else{
                 this.makeToast("Erro", response.headers.erro, "danger")
