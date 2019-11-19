@@ -150,6 +150,7 @@ export default {
           .post(process.env.VUE_APP_API + "/usuario/registrar", data, header)
           .then(response => {
             if (response.status == 201) {
+              alert("Voce foi registrado com sucesso")
               this.$router.push("/pages/login");
             } else {
               //nao usado agora, trocado pelo toast

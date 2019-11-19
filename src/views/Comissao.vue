@@ -1,8 +1,6 @@
 <template>
   <div class="animated fadeIn">
 
-    
-    
     <b-row>
       <b-col lg="12">
         <c-table :table-data="items" :fields="fields" caption="Comissao" :comissaoPagina="comissaoPagina">
@@ -15,11 +13,8 @@
         </b-button-group>
         -->
       </b-col>
-
- 
     </b-row><!--/.row-->
 
-    
   </div>
 
 </template>

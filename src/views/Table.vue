@@ -165,7 +165,7 @@ export default {
           this.comissao = false;
         }
       })
-      .catch(() => {});
+      .catch((e) => { alert("Nao foi possivel conectar a API. " + e) });
   }
 };
 </script>
