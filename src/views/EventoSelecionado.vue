@@ -15,12 +15,9 @@
                     </b-col>
                 </b-row>
             </div>
-            <p>
-                {{description}}
+            
+            <h4>{{description}} </h4>
 
-            </p>
-
-           
             <div slot="footer">
             <b-row>
                 <b-col >

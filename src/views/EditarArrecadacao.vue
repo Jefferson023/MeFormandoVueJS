@@ -40,7 +40,7 @@
               label-for="DateInicial"
               :label-cols="3"
               >
-              <b-form-input id="dateInicial" v-model= "dateInicial" type="date" ></b-form-input>
+              <b-form-input id="dInicial" v-model= "dInicial" type="date" ></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -48,7 +48,7 @@
               label-for="DateFinal"
               :label-cols="3"
               >
-              <b-form-input id="dateFinal" v-model= "dateFinal" type="date" ></b-form-input>
+              <b-form-input id="dFinal" v-model= "dFinal" type="date" ></b-form-input>
             </b-form-group>
             
           
@@ -75,8 +75,8 @@ export default {
       Titulo: "", 
       Custo: "", 
       Ganho: "",
-      DateInicial: "", 
-      DateFinal: "",
+      dInicial: "", 
+      dFinal: "",
       id: this.$route.params.Pid
     };
   },
@@ -92,14 +92,14 @@ export default {
       });
     },
     editarArrecadacao() {
-      if (this.Titulo != "" && this.Custo != "" && this.Ganho != "" && this.DateInicial  != null && this.DateFinal  != null ) {
+      if (this.Titulo != "" && this.Custo != "" && this.Ganho != "" && this.dInicial  != null && this.dFinal  != null ) {
         const data = qs.stringify({
             token: localStorage.getItem("user_token"),
             Titulo: this.Titulo, 
             Custo: this.Custo , 
             Ganho: this.Ganho , 
-            DateInicial: this.DateInicial,
-            DateFinal: this.DateFinal}
+            DateInicial: this.dInicial,
+            DateFinal: this.dFinal}
         );
         axios
           .post(process.env.VUE_APP_API + "/arrecadacao/alterar", data, {

@@ -15,16 +15,14 @@
                     </b-col>
                 </b-row>
             </div>
-            <p>
-                {{dateInicial}} - {{dateFinal}}
-
-            </p>
-
+            
+            <h4><strong>Data inicial:</strong> {{ dateInicial }}</h4>
+            <h4><strong>Data final:</strong> {{ dateFinal }}</h4>
            
             <div slot="footer">
             <b-row>
                 <b-col >
-                <h2>Preço:R${{custo}} -- Preço:R${{ganho}}</h2>
+                <h2>Custo: R$ {{custo}} - Ganho: R$ {{ganho}}</h2>
                 
                 </b-col>
                 
@@ -84,15 +82,15 @@ export default {
         
       })
       .then(response => {
-       
-       
         if (response.data != null) {
           console.log(response);
-          (this.titulo = response.data[0][0]),
-          (this.custo = response.data[0][1]),
-          (this.ganho = response.data[0][2]),
-          (this.dateInicial = response.data[0][3]),
-          (this.dateFinal = response.data[0][4]);
+          response.data.forEach(element => {          
+          (this.titulo = element[0]),
+          (this.custo = element[1]),
+          (this.ganho = element[2]),
+          (this.dateInicial = element[3]),
+          (this.dateFinal = element[4]);
+          })
         } else {
           alert("Nulo!!!")
         }

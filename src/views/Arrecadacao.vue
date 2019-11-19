@@ -18,7 +18,7 @@
             {{ item.titulo }} 
             </h5>
             <p>
-                {{ item.dateInicial }} - {{ item.dateFinal }}
+                {{ item.dateInicial }} / {{ item.dateFinal }}
             </p>
         </b-list-group-item >
         
