@@ -74,6 +74,10 @@ const AdicionarVotacao = () => import('@/views/AdicionarVotacao')
 const AdicionarCerimonial = () => import('@/views/AdicionarCerimonial')
 const CriarTurma = () => import('@/views/CriarTurma')
 const ConvitesDeTurma = () => import('@/views/ConvitesDeTurma')
+const Arrecadacoes = () => import('@/views/Arrecadacoes')
+const ArrecadacaoSelecionada = () => import('@/views/ArrecadacaoSelecionada')
+const AdicionarArrecadacao = () => import('@/views/AdicionarArrecadacao')
+const EditarArrecadacao = () => import('@/views/EditarArrecadacao')
 Vue.use(Router)
 
 function autenticado(to, from, next) {
@@ -199,6 +203,26 @@ function configRoutes() {
           path: 'eventos',
           name: 'Eventos',
           component: Eventos
+        },
+        {
+          path: 'arrecadacoes',
+          name: 'Arrecadações',
+          component: Arrecadacoes
+        },
+        {
+          path: '/arrecadacaoSelecionada/:Pid',
+          name: 'Arrecadacao Selecionada',
+          component: ArrecadacaoSelecionada
+        },
+        {
+          path: 'AdicionarArrecadacao',
+          name: 'Adicionar Arrecadacao',
+          component: AdicionarArrecadacao
+        },
+        {
+          path: '/EditarArrecadacao/:Pid',
+          name: 'Editar Arrecadacao',
+          component: EditarArrecadacao
         },
 
       ]
